@@ -1,4 +1,4 @@
-let columns, indicator;
+let columns, indicator, space;
 
 const drop_sounds = [1, 2, 3, 4, 5].map(number => new Audio(`/static/audio/disc-drop-${number}.mp3`));
 const end_sound = new Audio('static/audio/game-end.mp3');
@@ -19,11 +19,17 @@ function request_move() {
 }
 
 socket.on('make move', move_data => {
-    const space = columns[move_data["column"]].children[move_data["row"]];
+    drop_sounds[Math.floor(Math.random() * drop_sounds.length)].play(); // Plays random drop sound
+
+    if (space) {
+        space.style.outline = 'none'; // Unhighlights previous move
+    }
+
+    space = columns[move_data["column"]].children[move_data["row"]];
     const player = move_data["player"];
 
-    drop_sounds[Math.floor(Math.random() * drop_sounds.length)].play(); // Plays random drop sound
     space.style.backgroundColor = colors[player];
+    space.style.outline = '2px solid red'; 
     indicator.firstElementChild.style.backgroundColor = colors[player ^ 1]; // var bitwise-XOR 1 toggles var between 0 and 1
 });
 
