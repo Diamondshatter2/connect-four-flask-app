@@ -29,7 +29,7 @@ socket.on('make move', move_data => {
     const player = move_data["player"];
 
     space.style.backgroundColor = colors[player];
-    space.style.outline = '2px solid red'; 
+    space.style.outline = '4px solid rgba(0, 204, 0, 0.77)'; 
     indicator.firstElementChild.style.backgroundColor = colors[player ^ 1]; // var bitwise-XOR 1 toggles var between 0 and 1
 });
 
